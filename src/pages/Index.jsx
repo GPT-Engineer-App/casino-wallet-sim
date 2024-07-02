@@ -61,6 +61,11 @@ const Index = () => {
       const result = await response.json();
       setResult(result);
 
+      if (result.redirect_url) {
+        window.location.href = result.redirect_url;
+        return;
+      }
+
       if (endpoint === "/payin") {
         setBalance((prevBalance) => prevBalance + parseFloat(formData.amount));
       } else if (endpoint === "/payout") {
