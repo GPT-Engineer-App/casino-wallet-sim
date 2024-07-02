@@ -39,7 +39,9 @@ const Layout = () => {
       <div className="flex flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <MobileSidebar />
-          <div className="w-full flex-1">{/* Add nav bar content here! */}</div>
+          <div className="w-full flex-1">
+            <span className="text-xl font-bold">Lazy Cat Online Casino</span>
+          </div>
           <UserDropdown isAuthenticated={isAuthenticated} onLogin={handleLogin} onLogout={handleLogout} />
         </header>
         <main className="flex-grow p-4 overflow-auto bg-gray-100">
