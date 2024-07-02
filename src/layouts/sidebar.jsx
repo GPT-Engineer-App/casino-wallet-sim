@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, DollarSign } from "lucide-react";
+import { CircleUser, Menu, DollarSign, Home, Users, Play, HelpCircle } from "lucide-react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { navItems } from "../App";
 import { useState } from "react";
@@ -45,6 +45,7 @@ const Layout = () => {
         <main className="flex-grow p-4 overflow-auto bg-gray-100">
           <Outlet />
         </main>
+        <Footer /> {/* Add Footer component */}
       </div>
     </div>
   );
@@ -140,5 +141,25 @@ const SidebarNavLink = ({ to, children }) => (
     {children}
   </NavLink>
 );
+
+const Footer = () => (
+  <footer className="sticky bottom-0 flex justify-around items-center h-16 bg-muted/40 border-t">
+    <FooterIcon to="/" icon={<Home className="h-6 w-6" />} label="Home" />
+    <FooterIcon to="/transfer" icon={<Users className="h-6 w-6" />} label="Transfer Fund to Friends" />
+    <FooterIcon to="https://747-5.com" icon={<Play className="h-6 w-6" />} label="Play" external />
+    <FooterIcon to="/help" icon={<HelpCircle className="h-6 w-6" />} label="Help" />
+  </footer>
+);
+
+const FooterIcon = ({ to, icon, label, external }) => {
+  const linkProps = external ? { href: to, target: "_blank", rel: "noopener noreferrer" } : { to };
+
+  return (
+    <NavLink {...linkProps} className="flex flex-col items-center text-muted-foreground hover:text-primary">
+      {icon}
+      <span className="text-xs">{label}</span>
+    </NavLink>
+  );
+};
 
 export default Layout;
