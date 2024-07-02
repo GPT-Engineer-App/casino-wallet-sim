@@ -40,13 +40,22 @@ const Index = () => {
 
   const handleSubmit = async (endpoint) => {
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch('https://api.nexuspay.cloud/payin/process', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: "gerald",
+          email: "marcSmith@yahoo.com",
+          amount: formData.amount,
+          pay_method: formData.pay_method,
+          mobilenumber: "0909333322",
+          address: "Manila ph",
+          webhook: "https://api.nexuspay.cloud/payin/payinwebhook.php",
+          remarks: formData.remarks
+        }),
       });
 
       const result = await response.json();
