@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white flex justify-around items-center h-16">
+    <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white flex justify-around items-center h-16 z-50">
       <NavLink to="/" className="flex flex-col items-center">
         <Home className="h-6 w-6" />
         <span>Home</span>
