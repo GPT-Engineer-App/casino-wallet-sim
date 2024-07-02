@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,22 +11,34 @@ const Profile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get("https://api.example.com/user/profile")
-      .then(response => {
-        setProfileData(response.data);
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch("https://api.nexuspay.cloud/user/profile", {
+          headers: {
+            "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
+          }
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch profile data");
+        }
+        const data = await response.json();
+        setProfileData(data);
+        localStorage.setItem("profileData", JSON.stringify(data));
+      } catch (error) {
+        setError(error.message);
+      } finally {
         setLoading(false);
-      })
-      .catch(error => {
-        setError("Failed to fetch profile data");
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
 
-  useEffect(() => {
-    if (profileData) {
-      localStorage.setItem("profileData", JSON.stringify(profileData));
+    const storedProfileData = localStorage.getItem("profileData");
+    if (storedProfileData) {
+      setProfileData(JSON.parse(storedProfileData));
+      setLoading(false);
+    } else {
+      fetchProfileData();
     }
-  }, [profileData]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
