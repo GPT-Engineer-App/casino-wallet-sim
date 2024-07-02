@@ -70,21 +70,11 @@ const Index = () => {
     }
   };
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    toast.success("Logged in successfully!");
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    toast.success("Logged out successfully!");
-  };
-
   if (!isAuthenticated) {
     return (
       <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
         <h1 className="text-2xl font-bold mb-4">Login</h1>
-        <Button onClick={handleLogin}>Login</Button>
+        <Button onClick={() => setIsAuthenticated(true)}>Login</Button>
       </div>
     );
   }
@@ -92,12 +82,12 @@ const Index = () => {
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">Casino Wallet Simulation</h1>
-      <Button onClick={handleLogout} className="mb-4">Logout</Button>
       <div className="mb-4">
         <h2 className="text-xl font-semibold">Current Balance: ${balance.toFixed(2)}</h2>
       </div>
       <div className="flex space-x-2 mb-4">
         <Button as="a" href="/profile">User Profile</Button>
+        <Button onClick={() => setIsAuthenticated(false)}>Logout</Button>
       </div>
       <div className="flex space-x-2">
         <Dialog>

@@ -12,8 +12,27 @@ import { cn } from "@/lib/utils";
 import { CircleUser, Menu, DollarSign } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const Layout = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const storedAuth = localStorage.getItem("isAuthenticated");
+    return storedAuth ? JSON.parse(storedAuth) : false;
+  });
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    localStorage.setItem("isAuthenticated", true);
+    toast.success("Logged in successfully!");
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.setItem("isAuthenticated", false);
+    toast.success("Logged out successfully!");
+  };
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <Sidebar />
@@ -21,7 +40,7 @@ const Layout = () => {
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <MobileSidebar />
           <div className="w-full flex-1">{/* Add nav bar content here! */}</div>
-          <UserDropdown />
+          <UserDropdown isAuthenticated={isAuthenticated} onLogin={handleLogin} onLogout={handleLogout} />
         </header>
         <main className="flex-grow p-4 overflow-auto bg-gray-100">
           <Outlet />
@@ -81,7 +100,7 @@ const MobileSidebar = () => (
   </Sheet>
 );
 
-const UserDropdown = () => (
+const UserDropdown = ({ isAuthenticated, onLogin, onLogout }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="secondary" size="icon" className="rounded-full">
@@ -92,10 +111,13 @@ const UserDropdown = () => (
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
+      {isAuthenticated ? (
+        <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+      ) : (
+        <DropdownMenuItem onClick={onLogin}>Login</DropdownMenuItem>
+      )}
       <DropdownMenuItem>Settings</DropdownMenuItem>
       <DropdownMenuItem>Support</DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>Logout</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 );
