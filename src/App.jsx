@@ -1,5 +1,5 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Home } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
