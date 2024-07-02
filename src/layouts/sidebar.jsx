@@ -12,14 +12,30 @@ import { cn } from "@/lib/utils";
 import { CircleUser, Menu, DollarSign, Home, Users, Play, HelpCircle } from "lucide-react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { navItems } from "../App";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { Switch } from "@/components/ui/switch";
 
 const Layout = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
     return storedAuth ? JSON.parse(storedAuth) : false;
   });
+
+  const [theme, setTheme] = useState(() => {
+    const storedTheme = localStorage.getItem("theme");
+    return storedTheme ? storedTheme : "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.className = theme;
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -42,7 +58,7 @@ const Layout = () => {
           <div className="w-full flex-1">
             <span className="text-xl font-bold">Lazy Cat Online Casino</span>
           </div>
-          <UserDropdown isAuthenticated={isAuthenticated} onLogin={handleLogin} onLogout={handleLogout} />
+          <UserDropdown isAuthenticated={isAuthenticated} onLogin={handleLogin} onLogout={handleLogout} onThemeToggle={handleThemeToggle} theme={theme} />
         </header>
         <main className="flex-grow p-4 overflow-auto bg-gray-100">
           <Outlet />
@@ -103,7 +119,7 @@ const MobileSidebar = () => (
   </Sheet>
 );
 
-const UserDropdown = ({ isAuthenticated, onLogin, onLogout }) => {
+const UserDropdown = ({ isAuthenticated, onLogin, onLogout, onThemeToggle, theme }) => {
   const navigate = useNavigate();
 
   return (
@@ -124,6 +140,12 @@ const UserDropdown = ({ isAuthenticated, onLogin, onLogout }) => {
         )}
         <DropdownMenuItem onClick={() => navigate("/profile")}>Profile</DropdownMenuItem>
         <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>
+          <div className="flex items-center justify-between">
+            <span>Dark Mode</span>
+            <Switch checked={theme === "dark"} onCheckedChange={onThemeToggle} />
+          </div>
+        </DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
