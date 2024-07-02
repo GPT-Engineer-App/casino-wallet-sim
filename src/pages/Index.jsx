@@ -86,7 +86,6 @@ const Index = () => {
         <h2 className="text-xl font-semibold">Current Balance: ${balance.toFixed(2)}</h2>
       </div>
       <div className="flex space-x-2 mb-4">
-        <Button as="a" href="/profile">User Profile</Button>
         <Button onClick={() => setIsAuthenticated(false)}>Logout</Button>
       </div>
       <div className="flex space-x-2">

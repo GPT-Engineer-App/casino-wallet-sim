@@ -10,7 +10,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { CircleUser, Menu, DollarSign } from "lucide-react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { navItems } from "../App";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -100,27 +100,32 @@ const MobileSidebar = () => (
   </Sheet>
 );
 
-const UserDropdown = ({ isAuthenticated, onLogin, onLogout }) => (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="secondary" size="icon" className="rounded-full">
-        <CircleUser className="h-5 w-5" />
-        <span className="sr-only">Toggle user menu</span>
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      {isAuthenticated ? (
-        <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
-      ) : (
-        <DropdownMenuItem onClick={onLogin}>Login</DropdownMenuItem>
-      )}
-      <DropdownMenuItem>Settings</DropdownMenuItem>
-      <DropdownMenuItem>Support</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-);
+const UserDropdown = ({ isAuthenticated, onLogin, onLogout }) => {
+  const navigate = useNavigate();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary" size="icon" className="rounded-full">
+          <CircleUser className="h-5 w-5" />
+          <span className="sr-only">Toggle user menu</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {isAuthenticated ? (
+          <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={onLogin}>Login</DropdownMenuItem>
+        )}
+        <DropdownMenuItem onClick={() => navigate("/profile")}>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>Support</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 const SidebarNavLink = ({ to, children }) => (
   <NavLink
