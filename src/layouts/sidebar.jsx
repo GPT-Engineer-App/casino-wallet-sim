@@ -14,7 +14,6 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { navItems } from "../App";
 import { useState } from "react";
 import { toast } from "sonner";
-import Footer from "@/components/Footer"; // Import Footer
 
 const Layout = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -46,7 +45,6 @@ const Layout = () => {
         <main className="flex-grow p-4 overflow-auto bg-gray-100">
           <Outlet />
         </main>
-        <Footer /> {/* Add Footer here */}
       </div>
     </div>
   );
