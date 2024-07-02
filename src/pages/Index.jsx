@@ -54,7 +54,10 @@ const Index = () => {
           mobilenumber: "0909333322",
           address: "Manila ph",
           webhook: "https://api.nexuspay.cloud/payin/payinwebhook.php",
-          remarks: formData.remarks
+          remarks: formData.remarks,
+          currency: "PHP",
+          reference: "1234567890",
+          transaction_id: "txn_1234567890"
         }),
       });
 
