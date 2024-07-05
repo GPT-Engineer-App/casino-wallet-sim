@@ -17,7 +17,7 @@ const BalanceCard = ({ balance }) => (
   </div>
 );
 
-const TransactionButtons = ({ formData, handleChange, handleSubmit, handlePayout, bankAccounts }) => (
+const TransactionButtons = ({ formData, handleChange, handleSubmit, handlePayout, bankAccounts, depositAmount, setDepositAmount, handleDeposit }) => (
   <div className="flex space-x-2">
     <Dialog>
       <DialogTrigger asChild>
@@ -27,34 +27,19 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit, handlePayout
         <DialogHeader>
           <DialogTitle>Deposit</DialogTitle>
         </DialogHeader>
-        <form>
+        <form onSubmit={(e) => handleDeposit(e)}>
           <div className="mb-4">
-            <Label htmlFor="amount">Amount</Label>
+            <Label htmlFor="depositAmount">Amount</Label>
             <Input
-              id="amount"
-              name="amount"
+              id="depositAmount"
+              name="depositAmount"
               type="number"
-              value={formData.amount}
-              onChange={handleChange}
+              value={depositAmount}
+              onChange={(e) => setDepositAmount(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">
-            <Label htmlFor="pay_method">Pay Method</Label>
-            <select
-              id="pay_method"
-              name="pay_method"
-              value={formData.pay_method}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded"
-            >
-              <option value="sp-qrph">SP-QRPH</option>
-            </select>
-          </div>
-          <Button type="button" onClick={() => handleSubmit("/payin")}>
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </form>
       </DialogContent>
     </Dialog>
@@ -259,6 +244,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDateRange, setSelectedDateRange] = useState(null);
   const [bankAccounts, setBankAccounts] = useState([]);
+  const [depositAmount, setDepositAmount] = useState("");
 
   useEffect(() => {
     const storedBalance = localStorage.getItem("balance");
@@ -376,6 +362,50 @@ const Index = () => {
     }
   };
 
+  const handleDeposit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('https://api.nexuspay.cloud/payin/process', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
+        },
+        body: JSON.stringify({
+          name: "Marc",
+          email: "admin@tmapp.live",
+          amount: depositAmount,
+          pay_method: "sp-qrph",
+          mobilenumber: "09182156660",
+          address: "Batangas ph",
+          webhook: "https://hook.eu2.make.com/ern4krdqcl8gzbm2a106yrnt8gltko9q",
+          remarks: "live test payin"
+        }),
+      });
+
+      const result = await response.json();
+      setResult(result);
+
+      if (result.redirect_url) {
+        setPaymentUrl(result.redirect_url);
+        setShowModal(true);
+        return;
+      }
+
+      setBalance((prevBalance) => prevBalance + parseFloat(depositAmount));
+
+      setTransactions((prevTransactions) => [
+        ...prevTransactions,
+        { amount: depositAmount, endpoint: "/payin", timestamp: new Date().toISOString() },
+      ]);
+
+      toast.success("Deposit successful!");
+    } catch (error) {
+      toast.error("Deposit failed!");
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">My Lazy Wallet</h1>
@@ -383,7 +413,7 @@ const Index = () => {
         <BalanceCard balance={balance} />
       </div>
       <div className="p-4 mb-4 bg-white rounded shadow">
-        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} handlePayout={handlePayout} bankAccounts={bankAccounts} />
+        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} handlePayout={handlePayout} bankAccounts={bankAccounts} depositAmount={depositAmount} setDepositAmount={setDepositAmount} handleDeposit={handleDeposit} />
       </div>
       {result && (
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
