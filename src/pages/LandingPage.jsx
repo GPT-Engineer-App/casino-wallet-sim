@@ -13,7 +13,7 @@ const LandingPage = () => {
         <div className="relative z-10 text-center text-white">
           <h1 className="text-5xl font-bold mb-4">Welcome to LazyCat Online Casino</h1>
           <p className="text-xl mb-8">Seamless transactions for deposits and withdrawals of funds.</p>
-          <Button as={Link} to="/signin" variant="primary" size="lg">Get Started</Button>
+          <Button as={Link} to="/register" variant="primary" size="lg">Get Started</Button>
         </div>
       </section>
 
