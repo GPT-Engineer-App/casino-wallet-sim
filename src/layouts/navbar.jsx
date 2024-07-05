@@ -42,7 +42,7 @@ const DesktopNav = () => (
       Register
     </NavItem>
     <NavItem to="/signin">
-      <UserPlus className="h-4 w-4" />
+      <CircleUser className="h-4 w-4" />
       Sign In
     </NavItem>
     {navItems.map((item) => (
@@ -75,7 +75,7 @@ const MobileNav = () => (
           Register
         </NavItem>
         <NavItem to="/signin">
-          <UserPlus className="h-4 w-4" />
+          <CircleUser className="h-4 w-4" />
           Sign In
         </NavItem>
         {navItems.map((item) => (

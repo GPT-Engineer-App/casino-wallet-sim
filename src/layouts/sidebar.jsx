@@ -86,10 +86,6 @@ const Sidebar = () => (
               {item.title}
             </SidebarNavLink>
           ))}
-          <SidebarNavLink to="/signin">
-            <UserPlus className="h-4 w-4" />
-            Sign In
-          </SidebarNavLink>
         </nav>
       </div>
     </div>
@@ -118,10 +114,6 @@ const MobileSidebar = () => (
             {item.title}
           </SidebarNavLink>
         ))}
-        <SidebarNavLink to="/signin">
-          <UserPlus className="h-4 w-4" />
-          Sign In
-        </SidebarNavLink>
       </nav>
     </SheetContent>
   </Sheet>
