@@ -86,9 +86,9 @@ const Sidebar = () => (
               {item.title}
             </SidebarNavLink>
           ))}
-          <SidebarNavLink to="/register">
+          <SidebarNavLink to="/signin">
             <UserPlus className="h-4 w-4" />
-            Register
+            Sign In
           </SidebarNavLink>
         </nav>
       </div>
@@ -118,9 +118,9 @@ const MobileSidebar = () => (
             {item.title}
           </SidebarNavLink>
         ))}
-        <SidebarNavLink to="/register">
+        <SidebarNavLink to="/signin">
           <UserPlus className="h-4 w-4" />
-          Register
+          Sign In
         </SidebarNavLink>
       </nav>
     </SheetContent>
