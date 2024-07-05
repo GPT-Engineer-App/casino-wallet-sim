@@ -14,19 +14,13 @@ import BankAccountManagement from "./pages/BankAccountManagement.jsx"; // Import
 import Help from "./pages/Help.jsx"; // Import Help page
 import BlankPage1 from "./pages/BlankPage1.jsx";
 import BlankPage2 from "./pages/BlankPage2.jsx";
-import LandingPage from "./pages/LandingPage.jsx"; // Import LandingPage
 
 const queryClient = new QueryClient();
 
 export const navItems = [
   {
-    title: "Home",
+    title: "Home", // Feel free to change this to your liking
     to: "/",
-    icon: <Home className="h-4 w-4" />,
-  },
-  {
-    title: "Landing",
-    to: "/landing",
     icon: <Home className="h-4 w-4" />,
   },
 ];
@@ -38,19 +32,17 @@ const App = () => {
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<LandingPage />} /> {/* Set LandingPage as the default route */}
-            <Route path="profile" element={<Profile />} />
-            <Route path="register" element={<Registration />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="topup" element={<TopUp />} />
-            <Route path="qr-code-storage" element={<QrCodeStorage />} />
-            <Route path="bank-account-management" element={<BankAccountManagement />} />
-            <Route path="help" element={<Help />} />
-            <Route path="blank-page-1" element={<BlankPage1 />} />
-            <Route path="blank-page-2" element={<BlankPage2 />} />
-            <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
-            <Route path="index" element={<Layout />}>
+            <Route path="/" element={<Layout />}>
               <Route index element={<Index />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="register" element={<Registration />} />
+              <Route path="signin" element={<SignIn />} /> {/* Add this line */}
+              <Route path="topup" element={<TopUp />} /> {/* Add this line */}
+              <Route path="qr-code-storage" element={<QrCodeStorage />} /> {/* Add this line */}
+              <Route path="bank-account-management" element={<BankAccountManagement />} /> {/* Add this line */}
+              <Route path="help" element={<Help />} /> {/* Add this line */}
+              <Route path="blank-page-1" element={<BlankPage1 />} />
+              <Route path="blank-page-2" element={<BlankPage2 />} />
             </Route>
           </Routes>
         </Router>
