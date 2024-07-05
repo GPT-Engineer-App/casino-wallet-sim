@@ -11,7 +11,6 @@ const Registration = () => {
     email: "marcSmith@yahoo.com",
     mobilenumber: "0909333322",
     address: "Manila ph",
-    amount: "",
   });
 
   const navigate = useNavigate();
@@ -63,7 +62,6 @@ const Registration = () => {
           { label: "Email", name: "email", type: "email" },
           { label: "Mobile Number", name: "mobilenumber", type: "text" },
           { label: "Address", name: "address", type: "text" },
-          { label: "Amount", name: "amount", type: "number" },
         ].map((field) => (
           <div key={field.name} className="mb-4">
             <Label htmlFor={field.name}>{field.label}</Label>

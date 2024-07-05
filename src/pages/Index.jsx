@@ -15,23 +15,19 @@ const Index = () => {
   const [result, setResult] = useState(null);
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const storedBalance = localStorage.getItem("balance");
     const storedTransactions = localStorage.getItem("transactions");
-    const storedAuth = localStorage.getItem("isAuthenticated");
 
     if (storedBalance) setBalance(parseFloat(storedBalance));
     if (storedTransactions) setTransactions(JSON.parse(storedTransactions));
-    if (storedAuth) setIsAuthenticated(JSON.parse(storedAuth));
   }, []);
 
   useEffect(() => {
     localStorage.setItem("balance", balance);
     localStorage.setItem("transactions", JSON.stringify(transactions));
-    localStorage.setItem("isAuthenticated", isAuthenticated);
-  }, [balance, transactions, isAuthenticated]);
+  }, [balance, transactions]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,23 +83,11 @@ const Index = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
-        <h1 className="text-2xl font-bold mb-4">Login</h1>
-        <Button onClick={() => setIsAuthenticated(true)}>Login</Button>
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">My Lazy Wallet</h1>
       <div className="mb-4">
         <h2 className="text-xl font-semibold">Current Balance: ${balance.toFixed(2)}</h2>
-      </div>
-      <div className="flex space-x-2 mb-4">
-        <Button onClick={() => setIsAuthenticated(false)}>Logout</Button>
       </div>
       <div className="flex space-x-2">
         <Dialog>

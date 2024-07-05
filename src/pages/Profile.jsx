@@ -6,7 +6,12 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState({
+    name: "gerald",
+    email: "marcSmith@yahoo.com",
+    mobilenumber: "0909333322",
+    address: "Manila ph",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
