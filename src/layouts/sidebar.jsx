@@ -114,6 +114,10 @@ const Sidebar = () => (
             <CreditCard className="h-4 w-4" />
             Blank Page 2
           </SidebarNavLink>
+          <SidebarNavLink to="/landing">
+            <Home className="h-4 w-4" />
+            Landing
+          </SidebarNavLink>
         </nav>
       </div>
     </div>
