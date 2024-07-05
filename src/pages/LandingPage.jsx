@@ -13,7 +13,7 @@ const LandingPage = () => {
         <div className="relative z-10 text-center text-white">
           <h1 className="text-5xl font-bold mb-4">Welcome to Our Application</h1>
           <p className="text-xl mb-8">The best solution for managing your tasks efficiently.</p>
-          <Button as={Link} to="/sign-in" variant="primary" size="lg">Get Started</Button>
+          <Button as={Link} to="/register" variant="primary" size="lg">Get Started</Button>
         </div>
       </section>
 
