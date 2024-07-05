@@ -6,6 +6,110 @@ import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Modal from "@/components/ui/modal";
 
+const BalanceCard = ({ balance }) => (
+  <div className="mb-4">
+    <h2 className="text-xl font-semibold">Current Balance: ₱{balance.toFixed(2)}</h2>
+  </div>
+);
+
+const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
+  <div className="flex space-x-2">
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Deposit</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Deposit</DialogTitle>
+        </DialogHeader>
+        <form>
+          <div className="mb-4">
+            <Label htmlFor="amount">Amount</Label>
+            <Input
+              id="amount"
+              name="amount"
+              type="number"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <Label htmlFor="pay_method">Pay Method</Label>
+            <select
+              id="pay_method"
+              name="pay_method"
+              value={formData.pay_method}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border rounded"
+            >
+              <option value="sp-qrph">SP-QRPH</option>
+            </select>
+          </div>
+          <Button type="button" onClick={() => handleSubmit("/payin")}>
+            Submit
+          </Button>
+        </form>
+      </DialogContent>
+    </Dialog>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Withdraw</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Withdraw</DialogTitle>
+        </DialogHeader>
+        <form>
+          <div className="mb-4">
+            <Label htmlFor="amount">Amount</Label>
+            <Input
+              id="amount"
+              name="amount"
+              type="number"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <Label htmlFor="pay_method">Pay Method</Label>
+            <select
+              id="pay_method"
+              name="pay_method"
+              value={formData.pay_method}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border rounded"
+            >
+              <option value="sp-qrph">SP-QRPH</option>
+            </select>
+          </div>
+          <Button type="button" onClick={() => handleSubmit("/payout")}>
+            Submit
+          </Button>
+        </form>
+      </DialogContent>
+    </Dialog>
+  </div>
+);
+
+const TransactionHistory = ({ transactions }) => (
+  <div className="mt-4">
+    <h2 className="text-xl font-semibold mb-2">Transaction History</h2>
+    <ul className="bg-gray-100 p-2 rounded">
+      {transactions.map((transaction, index) => (
+        <li key={index} className="mb-2">
+          <div>{transaction.timestamp}</div>
+          <div>{transaction.endpoint === "/payin" ? "Deposit" : "Withdraw"}: ₱{transaction.amount}</div>
+          <div>Remarks: {transaction.remarks}</div>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const Index = () => {
   const [formData, setFormData] = useState({
     amount: "100",
@@ -90,104 +194,12 @@ const Index = () => {
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">My Lazy Wallet</h1>
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold">Current Balance: ₱{balance.toFixed(2)}</h2>
-      </div>
-      <div className="flex space-x-2">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Deposit</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Deposit</DialogTitle>
-            </DialogHeader>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="amount">Amount</Label>
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  value={formData.amount}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <Label htmlFor="pay_method">Pay Method</Label>
-                <select
-                  id="pay_method"
-                  name="pay_method"
-                  value={formData.pay_method}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="sp-qrph">SP-QRPH</option>
-                </select>
-              </div>
-              <Button type="button" onClick={() => handleSubmit("/payin")}>
-                Submit
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Withdraw</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Withdraw</DialogTitle>
-            </DialogHeader>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="amount">Amount</Label>
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  value={formData.amount}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <Label htmlFor="pay_method">Pay Method</Label>
-                <select
-                  id="pay_method"
-                  name="pay_method"
-                  value={formData.pay_method}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="sp-qrph">SP-QRPH</option>
-                </select>
-              </div>
-              <Button type="button" onClick={() => handleSubmit("/payout")}>
-                Submit
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
+      <BalanceCard balance={balance} />
+      <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
       {result && (
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
       )}
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold mb-2">Transaction History</h2>
-        <ul className="bg-gray-100 p-2 rounded">
-          {transactions.map((transaction, index) => (
-            <li key={index} className="mb-2">
-              <div>{transaction.timestamp}</div>
-              <div>{transaction.endpoint === "/payin" ? "Deposit" : "Withdraw"}: ₱{transaction.amount}</div>
-              <div>Remarks: {transaction.remarks}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <TransactionHistory transactions={transactions} />
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <iframe src={paymentUrl} title="Payment" className="w-full h-64"></iframe>
