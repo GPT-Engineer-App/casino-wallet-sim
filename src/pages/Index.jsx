@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import Modal from "@/components/ui/modal";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const BalanceCard = ({ balance }) => (
   <div className="mb-4">
@@ -98,14 +99,13 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
 );
 
 const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selectedDate, setSelectedDate }) => {
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearchQuery = transaction.remarks.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDate = selectedDate ? format(new Date(transaction.timestamp), "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd") : true;
     return matchesSearchQuery && matchesDate;
   });
-
-  const depositTransactions = filteredTransactions.filter(transaction => transaction.endpoint === "/payin");
-  const withdrawTransactions = filteredTransactions.filter(transaction => transaction.endpoint === "/payout");
 
   return (
     <div className="mt-4 max-h-96 overflow-y-auto">
@@ -121,37 +121,39 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
         />
       </div>
       <div className="mb-4">
-        <Label htmlFor="date">Filter by Date</Label>
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={setSelectedDate}
-          className="rounded-md border"
-        />
+        <Button onClick={() => setIsCalendarVisible(!isCalendarVisible)}>
+          {isCalendarVisible ? "Hide Calendar" : "Show Calendar"}
+        </Button>
+        {isCalendarVisible && (
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={setSelectedDate}
+            className="rounded-md border mt-2"
+          />
+        )}
       </div>
       <div className="bg-gray-100 p-2 rounded">
-        <h3 className="text-lg font-semibold mb-2">Deposits</h3>
-        <ul>
-          {depositTransactions.map((transaction, index) => (
-            <li key={index} className="mb-2">
-              <div>{transaction.timestamp}</div>
-              <div>Deposit: ₱{transaction.amount}</div>
-              <div>Remarks: {transaction.remarks}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="bg-gray-100 p-2 rounded mt-4">
-        <h3 className="text-lg font-semibold mb-2">Withdrawals</h3>
-        <ul>
-          {withdrawTransactions.map((transaction, index) => (
-            <li key={index} className="mb-2">
-              <div>{transaction.timestamp}</div>
-              <div>Withdraw: ₱{transaction.amount}</div>
-              <div>Remarks: {transaction.remarks}</div>
-            </li>
-          ))}
-        </ul>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="bg-blue-500 text-white">#</TableHead>
+              <TableHead className="bg-blue-500 text-white">Date and Time</TableHead>
+              <TableHead className="bg-blue-500 text-white">Amount</TableHead>
+              <TableHead className="bg-blue-500 text-white">Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredTransactions.map((transaction, index) => (
+              <TableRow key={index}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{transaction.timestamp}</TableCell>
+                <TableCell>₱{transaction.amount}</TableCell>
+                <TableCell>{transaction.endpoint === "/payin" ? "Deposit" : "Withdraw"}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
