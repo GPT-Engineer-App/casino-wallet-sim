@@ -196,7 +196,10 @@ const SidebarNavLink = ({ to, children }) => (
 
 const Footer = () => (
   <footer className="sticky bottom-0 flex justify-around items-center h-16 bg-muted/40 border-t">
-    <FooterIcon to="/" icon={<Home className="h-6 w-6" />} label="Home" />
+    <NavLink to="/" className="flex flex-col items-center text-muted-foreground hover:text-primary">
+      <Home className="h-6 w-6" />
+      <span className="text-xs">Home</span>
+    </NavLink>
     <FooterIcon to="/transfer" icon={<Users className="h-6 w-6" />} label="Transfer Fund to Friends" />
     <FooterIcon to="https://747-5.com" icon={<Play className="h-6 w-6" />} label="Play" external />
     <FooterIcon to="/help" icon={<HelpCircle className="h-6 w-6" />} label="Help" />
