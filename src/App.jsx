@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Home } from "lucide-react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
 import Profile from "./pages/Profile.jsx";
 import Layout from "./layouts/sidebar"; // Change layout to sidebar
 import Index from "./pages/Index.jsx";
@@ -33,26 +33,27 @@ export const navItems = [
 ];
 
 const App = () => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="register" element={<Registration />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="topup" element={<TopUp />} />
-              <Route path="qr-code-storage" element={<QrCodeStorage />} />
-              <Route path="bank-account-management" element={<BankAccountManagement />} />
-              <Route path="help" element={<Help />} />
-              <Route path="blank-page-1" element={<BlankPage1 />} />
-              <Route path="blank-page-2" element={<BlankPage2 />} />
-              <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
-              <Route path="cashout" element={<CashOut />} /> {/* Add CashOut route */}
-            </Route>
+            <Route path="/" element={<Navigate to="/landing" />} />
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/register" element={<Registration />} />
+            <Route path="/topup" element={<TopUp />} />
+            <Route path="/qr-code-storage" element={<QrCodeStorage />} />
+            <Route path="/bank-account-management" element={<BankAccountManagement />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/blank-page-1" element={<BlankPage1 />} />
+            <Route path="/blank-page-2" element={<BlankPage2 />} />
+            <Route path="/cashout" element={<CashOut />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/index" element={isAuthenticated ? <Layout><Index /></Layout> : <Navigate to="/signin" />} />
           </Routes>
         </Router>
       </TooltipProvider>
