@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Profile from "./pages/Profile.jsx";
 import Layout from "./layouts/sidebar"; // Change layout to sidebar
 import Index from "./pages/Index.jsx";
+import Registration from "./pages/Registration.jsx";
 const queryClient = new QueryClient();
 
 export const navItems = [
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Index />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="register" element={<Registration />} />
             </Route>
           </Routes>
         </Router>
