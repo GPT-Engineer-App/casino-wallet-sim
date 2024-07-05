@@ -94,6 +94,10 @@ const Sidebar = () => (
             <UserPlus className="h-4 w-4" />
             Sign In
           </SidebarNavLink>
+          <SidebarNavLink to="/qr-code-storage">
+            <CreditCard className="h-4 w-4" />
+            QR Code Storage
+          </SidebarNavLink>
         </nav>
       </div>
     </div>
@@ -129,6 +133,10 @@ const MobileSidebar = () => (
         <SidebarNavLink to="/signin">
           <UserPlus className="h-4 w-4" />
           Sign In
+        </SidebarNavLink>
+        <SidebarNavLink to="/qr-code-storage">
+          <CreditCard className="h-4 w-4" />
+          QR Code Storage
         </SidebarNavLink>
       </nav>
     </SheetContent>

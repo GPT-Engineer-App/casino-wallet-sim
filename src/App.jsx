@@ -9,6 +9,8 @@ import Index from "./pages/Index.jsx";
 import Registration from "./pages/Registration.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import TopUp from "./pages/TopUp.jsx"; // Import TopUp page
+import QrCodeStorage from "./pages/QrCodeStorage.jsx"; // Import QrCodeStorage page
+
 const queryClient = new QueryClient();
 
 export const navItems = [
@@ -32,6 +34,7 @@ const App = () => {
               <Route path="register" element={<Registration />} />
               <Route path="signin" element={<SignIn />} /> {/* Add this line */}
               <Route path="topup" element={<TopUp />} /> {/* Add this line */}
+              <Route path="qr-code-storage" element={<QrCodeStorage />} /> {/* Add this line */}
             </Route>
           </Routes>
         </Router>
