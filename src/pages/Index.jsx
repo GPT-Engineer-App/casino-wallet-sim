@@ -99,15 +99,17 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
   </div>
 );
 
-const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selectedDate, setSelectedDate }) => {
+const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selectedDateRange, setSelectedDateRange }) => {
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 5;
 
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearchQuery = transaction.remarks.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesDate = selectedDate ? format(new Date(transaction.timestamp), "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd") : true;
-    return matchesSearchQuery && matchesDate;
+    const matchesDateRange = selectedDateRange
+      ? new Date(transaction.timestamp) >= selectedDateRange.from && new Date(transaction.timestamp) <= selectedDateRange.to
+      : true;
+    return matchesSearchQuery && matchesDateRange;
   });
 
   const indexOfLastTransaction = currentPage * transactionsPerPage;
@@ -119,6 +121,14 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const handleDateRangeSelect = (range) => {
+    setSelectedDateRange(range);
+    setIsCalendarVisible(false);
+  };
+
+  const deposits = currentTransactions.filter(transaction => transaction.endpoint === "/payin");
+  const withdrawals = currentTransactions.filter(transaction => transaction.endpoint === "/payout");
 
   return (
     <div className="mt-4 max-h-96 overflow-y-auto">
@@ -139,14 +149,15 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
         </Button>
         {isCalendarVisible && (
           <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={setSelectedDate}
+            mode="range"
+            selected={selectedDateRange}
+            onSelect={handleDateRangeSelect}
             className="rounded-md border mt-2"
           />
         )}
       </div>
       <div className="bg-gray-100 p-2 rounded">
+        <h3 className="text-lg font-semibold mb-2">Deposits</h3>
         <Table>
           <TableHeader>
             <TableRow>
@@ -157,12 +168,35 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentTransactions.map((transaction, index) => (
+            {deposits.map((transaction, index) => (
               <TableRow key={index}>
                 <TableCell>{indexOfFirstTransaction + index + 1}</TableCell>
                 <TableCell>{transaction.timestamp}</TableCell>
                 <TableCell>₱{transaction.amount}</TableCell>
-                <TableCell>{transaction.endpoint === "/payin" ? "Deposit" : "Withdraw"}</TableCell>
+                <TableCell>Deposit</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="bg-gray-100 p-2 rounded mt-4">
+        <h3 className="text-lg font-semibold mb-2">Withdrawals</h3>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="bg-blue-500 text-white">#</TableHead>
+              <TableHead className="bg-blue-500 text-white">Date and Time</TableHead>
+              <TableHead className="bg-blue-500 text-white">Amount</TableHead>
+              <TableHead className="bg-blue-500 text-white">Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {withdrawals.map((transaction, index) => (
+              <TableRow key={index}>
+                <TableCell>{indexOfFirstTransaction + index + 1}</TableCell>
+                <TableCell>{transaction.timestamp}</TableCell>
+                <TableCell>₱{transaction.amount}</TableCell>
+                <TableCell>Withdraw</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -214,7 +248,7 @@ const Index = () => {
   const [showModal, setShowModal] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDateRange, setSelectedDateRange] = useState(null);
 
   useEffect(() => {
     const storedBalance = localStorage.getItem("balance");
@@ -297,7 +331,7 @@ const Index = () => {
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
       )}
       <div className="p-4 mb-4 bg-white rounded shadow">
-        <TransactionHistory transactions={transactions} searchQuery={searchQuery} setSearchQuery={setSearchQuery} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        <TransactionHistory transactions={transactions} searchQuery={searchQuery} setSearchQuery={setSearchQuery} selectedDateRange={selectedDateRange} setSelectedDateRange={setSelectedDateRange} />
       </div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
