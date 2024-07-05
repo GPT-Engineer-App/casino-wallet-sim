@@ -31,7 +31,7 @@ const Layout = () => {
 const DesktopNav = () => (
   <nav className="hidden md:flex md:items-center md:gap-5 lg:gap-6 text-lg font-medium md:text-sm">
     <NavItem
-      to="/"
+      to="/home"
       className="flex items-center gap-2 text-lg font-semibold md:text-base"
     >
       <Package2 className="h-6 w-6" />
@@ -60,7 +60,7 @@ const MobileNav = () => (
     <SheetContent side="left">
       <nav className="grid gap-6 text-lg font-medium">
         <NavItem
-          to="/"
+          to="/home"
           className="flex items-center gap-2 text-lg font-semibold"
         >
           <Package2 className="h-6 w-6" />

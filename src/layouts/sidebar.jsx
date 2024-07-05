@@ -73,7 +73,7 @@ const Sidebar = () => (
   <div className="hidden border-r bg-muted/40 md:block">
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-        <NavLink to="/" className="flex items-center gap-2 font-semibold">
+        <NavLink to="/home" className="flex items-center gap-2 font-semibold">
           <DollarSign className="h-6 w-6" />
           <span>Casino Wallet</span>
         </NavLink>
@@ -107,7 +107,7 @@ const MobileSidebar = () => (
     <SheetContent side="left" className="flex flex-col">
       <nav className="grid gap-2 text-lg font-medium">
         <NavLink
-          to="/"
+          to="/home"
           className="flex items-center gap-2 text-lg font-semibold mb-4"
         >
           <DollarSign className="h-6 w-6" />
@@ -176,7 +176,7 @@ const SidebarNavLink = ({ to, children }) => (
 
 const Footer = () => (
   <footer className="sticky bottom-0 flex justify-around items-center h-16 bg-muted/40 border-t">
-    <FooterIcon to="/" icon={<Home className="h-6 w-6" />} label="Home" />
+    <FooterIcon to="/home" icon={<Home className="h-6 w-6" />} label="Home" />
     <FooterIcon to="/transfer" icon={<Users className="h-6 w-6" />} label="Transfer Fund to Friends" />
     <FooterIcon to="https://747-5.com" icon={<Play className="h-6 w-6" />} label="Play" external />
     <FooterIcon to="/help" icon={<HelpCircle className="h-6 w-6" />} label="Help" />

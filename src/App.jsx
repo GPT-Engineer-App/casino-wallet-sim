@@ -7,12 +7,13 @@ import Profile from "./pages/Profile.jsx";
 import Layout from "./layouts/sidebar"; // Change layout to sidebar
 import Index from "./pages/Index.jsx";
 import Registration from "./pages/Registration.jsx";
+import Login from "./pages/Login.jsx";
 const queryClient = new QueryClient();
 
 export const navItems = [
   {
     title: "Home", // Feel free to change this to your liking
-    to: "/",
+    to: "/home",
     icon: <Home className="h-4 w-4" />,
   },
 ];
@@ -24,7 +25,8 @@ const App = () => {
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Layout />}>
               <Route index element={<Index />} />
               <Route path="profile" element={<Profile />} />
               <Route path="register" element={<Registration />} />
