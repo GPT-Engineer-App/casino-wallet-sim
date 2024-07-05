@@ -17,95 +17,118 @@ const BalanceCard = ({ balance }) => (
   </div>
 );
 
-const TransactionButtons = ({ formData, handleChange, handleSubmit, handlePayout, bankAccounts }) => (
-  <div className="flex space-x-2">
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Deposit</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Deposit</DialogTitle>
-        </DialogHeader>
-        <form>
-          <div className="mb-4">
-            <Label htmlFor="amount">Amount</Label>
-            <Input
-              id="amount"
-              name="amount"
-              type="number"
-              value={formData.amount}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <Label htmlFor="pay_method">Pay Method</Label>
-            <select
-              id="pay_method"
-              name="pay_method"
-              value={formData.pay_method}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded"
-            >
-              <option value="sp-qrph">SP-QRPH</option>
-            </select>
-          </div>
-          <Button type="button" onClick={() => handleSubmit("/payin")}>
-            Submit
-          </Button>
-        </form>
-      </DialogContent>
-    </Dialog>
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Withdraw</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Withdraw</DialogTitle>
-        </DialogHeader>
-        <form>
-          <div className="mb-4">
-            <Label htmlFor="amount">Amount</Label>
-            <Input
-              id="amount"
-              name="amount"
-              type="number"
-              value={formData.amount}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <Label htmlFor="bank_account">Bank Account</Label>
-            <Select
-              id="bank_account"
-              name="bank_account"
-              value={formData.bank_account}
-              onValueChange={(value) => handleChange({ target: { name: "bank_account", value } })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a bank account" />
-              </SelectTrigger>
-              <SelectContent>
-                {bankAccounts.map((account, index) => (
-                  <SelectItem key={index} value={account.accountNumber}>
-                    {account.bankName} - {account.accountNumber}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Button type="button" onClick={() => handlePayout()}>
-            Submit
-          </Button>
-        </form>
-      </DialogContent>
-    </Dialog>
-  </div>
-);
+const TransactionButtons = ({ formData, handleChange, handleSubmit, handlePayout, bankAccounts }) => {
+  const [depositAmount, setDepositAmount] = useState("");
+
+  const handleDepositSubmit = async () => {
+    try {
+      const response = await fetch('https://api.nexuspay.cloud/payin/process', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
+        },
+        body: JSON.stringify({
+          name: "Marc",
+          email: "admin@tmapp.live",
+          amount: depositAmount,
+          pay_method: "sp-qrph",
+          mobilenumber: "09182156660",
+          address: "Batangas ph",
+          webhook: "https://hook.eu2.make.com/ern4krdqcl8gzbm2a106yrnt8gltko9q",
+          remarks: "live test payin"
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        toast.success("Deposit successful!");
+      } else {
+        toast.error("Deposit failed!");
+      }
+    } catch (error) {
+      toast.error("Deposit failed!");
+      console.error("Error:", error);
+    }
+  };
+
+  return (
+    <div className="flex space-x-2">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Deposit</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Deposit</DialogTitle>
+          </DialogHeader>
+          <form>
+            <div className="mb-4">
+              <Label htmlFor="depositAmount">Amount</Label>
+              <Input
+                id="depositAmount"
+                name="depositAmount"
+                type="number"
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+                required
+              />
+            </div>
+            <Button type="button" onClick={handleDepositSubmit}>
+              Submit
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Withdraw</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Withdraw</DialogTitle>
+          </DialogHeader>
+          <form>
+            <div className="mb-4">
+              <Label htmlFor="amount">Amount</Label>
+              <Input
+                id="amount"
+                name="amount"
+                type="number"
+                value={formData.amount}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="bank_account">Bank Account</Label>
+              <Select
+                id="bank_account"
+                name="bank_account"
+                value={formData.bank_account}
+                onValueChange={(value) => handleChange({ target: { name: "bank_account", value } })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a bank account" />
+                </SelectTrigger>
+                <SelectContent>
+                  {bankAccounts.map((account, index) => (
+                    <SelectItem key={index} value={account.accountNumber}>
+                      {account.bankName} - {account.accountNumber}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Button type="button" onClick={() => handlePayout()}>
+              Submit
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
 
 const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selectedDateRange, setSelectedDateRange }) => {
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
