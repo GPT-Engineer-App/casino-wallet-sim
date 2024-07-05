@@ -289,17 +289,14 @@ const Index = () => {
           "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
         },
         body: JSON.stringify({
-          name: "gerald",
-          email: "marcSmith@yahoo.com",
+          name: "Marc",
+          email: "admin@tmapp.live",
           amount: formData.amount,
           pay_method: formData.pay_method,
-          mobilenumber: "0909333322",
-          address: "Manila ph",
-          webhook: "https://api.nexuspay.cloud/payin/payinwebhook.php",
-          remarks: formData.remarks,
-          currency: "PHP",
-          reference: "1234567890",
-          transaction_id: "txn_1234567890"
+          mobilenumber: "09182156660",
+          address: "Batangas ph",
+          webhook: "https://hook.eu2.make.com/ern4krdqcl8gzbm2a106yrnt8gltko9q",
+          remarks: "live test payin"
         }),
       });
 
