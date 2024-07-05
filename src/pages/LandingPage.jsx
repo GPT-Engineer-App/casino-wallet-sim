@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Home, Shield, Users } from "lucide-react";
+import { Home, Shield, Users, DollarSign, CreditCard, Banknote } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -11,8 +11,8 @@ const LandingPage = () => {
       <section className="relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/hero-background.jpg')" }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Welcome to Our Application</h1>
-          <p className="text-xl mb-8">The best solution for managing your tasks efficiently.</p>
+          <h1 className="text-5xl font-bold mb-4">Welcome to LazyCat Online Casino</h1>
+          <p className="text-xl mb-8">Seamless transactions for deposits and withdrawals of funds.</p>
           <Button as={Link} to="/register" variant="primary" size="lg">Get Started</Button>
         </div>
       </section>
@@ -24,29 +24,29 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card>
               <CardHeader>
-                <Home className="h-12 w-12 mx-auto text-primary" />
-                <CardTitle className="mt-4">Easy to Use</CardTitle>
+                <DollarSign className="h-12 w-12 mx-auto text-primary" />
+                <CardTitle className="mt-4">Easy Deposits</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Our application is designed with a user-friendly interface that makes it easy to navigate and use.</p>
+                <p>Deposit funds into your casino wallet quickly and easily.</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <Shield className="h-12 w-12 mx-auto text-primary" />
-                <CardTitle className="mt-4">Secure</CardTitle>
+                <CreditCard className="h-12 w-12 mx-auto text-primary" />
+                <CardTitle className="mt-4">Secure Withdrawals</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>We prioritize your security with top-notch features to keep your data safe and secure.</p>
+                <p>Withdraw your winnings securely and without hassle.</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <Users className="h-12 w-12 mx-auto text-primary" />
-                <CardTitle className="mt-4">Collaborative</CardTitle>
+                <Banknote className="h-12 w-12 mx-auto text-primary" />
+                <CardTitle className="mt-4">Manage Funds</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Work together with your team seamlessly with our collaborative tools and features.</p>
+                <p>Keep track of your deposits, withdrawals, and balance all in one place.</p>
               </CardContent>
             </Card>
           </div>
@@ -67,7 +67,7 @@ const LandingPage = () => {
                 <CardTitle className="mt-4">John Doe</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>"This application has transformed the way I manage my tasks. Highly recommended!"</p>
+                <p>"LazyCat Online Casino has made managing my funds so much easier. Highly recommended!"</p>
               </CardContent>
             </Card>
             <Card>
@@ -79,7 +79,7 @@ const LandingPage = () => {
                 <CardTitle className="mt-4">Jane Smith</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>"A game-changer for our team. The collaborative features are fantastic!"</p>
+                <p>"The deposit and withdrawal process is seamless and secure. I love it!"</p>
               </CardContent>
             </Card>
             <Card>
@@ -91,7 +91,7 @@ const LandingPage = () => {
                 <CardTitle className="mt-4">Alice Johnson</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>"Secure and easy to use. I can't imagine going back to our old system."</p>
+                <p>"Managing my casino funds has never been this easy. Thank you, LazyCat!"</p>
               </CardContent>
             </Card>
           </div>

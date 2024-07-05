@@ -38,18 +38,19 @@ const App = () => {
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<LandingPage />} /> {/* Set LandingPage as the default route */}
+            <Route path="profile" element={<Profile />} />
+            <Route path="register" element={<Registration />} />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="topup" element={<TopUp />} />
+            <Route path="qr-code-storage" element={<QrCodeStorage />} />
+            <Route path="bank-account-management" element={<BankAccountManagement />} />
+            <Route path="help" element={<Help />} />
+            <Route path="blank-page-1" element={<BlankPage1 />} />
+            <Route path="blank-page-2" element={<BlankPage2 />} />
+            <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
+            <Route path="index" element={<Layout />}>
               <Route index element={<Index />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="register" element={<Registration />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="topup" element={<TopUp />} />
-              <Route path="qr-code-storage" element={<QrCodeStorage />} />
-              <Route path="bank-account-management" element={<BankAccountManagement />} />
-              <Route path="help" element={<Help />} />
-              <Route path="blank-page-1" element={<BlankPage1 />} />
-              <Route path="blank-page-2" element={<BlankPage2 />} />
-              <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
             </Route>
           </Routes>
         </Router>

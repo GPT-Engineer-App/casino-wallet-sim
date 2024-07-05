@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -244,6 +245,7 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     amount: "100",
     pay_method: "sp-qrph",
@@ -274,6 +276,13 @@ const Index = () => {
     localStorage.setItem("balance", balance);
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [balance, transactions]);
+
+  useEffect(() => {
+    const hasValidQRCode = localStorage.getItem("validQRCode");
+    if (!hasValidQRCode) {
+      navigate("/landing");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
