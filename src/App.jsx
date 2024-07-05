@@ -8,6 +8,7 @@ import Layout from "./layouts/sidebar"; // Change layout to sidebar
 import Index from "./pages/Index.jsx";
 import Registration from "./pages/Registration.jsx";
 import SignIn from "./pages/SignIn.jsx";
+import TopUp from "./pages/TopUp.jsx"; // Import TopUp page
 const queryClient = new QueryClient();
 
 export const navItems = [
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="register" element={<Registration />} />
               <Route path="signin" element={<SignIn />} /> {/* Add this line */}
+              <Route path="topup" element={<TopUp />} /> {/* Add this line */}
             </Route>
           </Routes>
         </Router>

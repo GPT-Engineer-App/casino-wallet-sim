@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Modal from "@/components/ui/modal";
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ const Index = () => {
   const [result, setResult] = useState(null);
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   useEffect(() => {
     const storedBalance = localStorage.getItem("balance");
@@ -61,7 +64,8 @@ const Index = () => {
       setResult(result);
 
       if (result.redirect_url) {
-        window.location.href = result.redirect_url;
+        setPaymentUrl(result.redirect_url);
+        setShowModal(true);
         return;
       }
 
@@ -112,14 +116,16 @@ const Index = () => {
               </div>
               <div className="mb-4">
                 <Label htmlFor="pay_method">Pay Method</Label>
-                <Input
+                <select
                   id="pay_method"
                   name="pay_method"
-                  type="text"
                   value={formData.pay_method}
                   onChange={handleChange}
                   required
-                />
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="sp-qrph">SP-QRPH</option>
+                </select>
               </div>
               <Button type="button" onClick={() => handleSubmit("/payin")}>
                 Submit
@@ -149,14 +155,16 @@ const Index = () => {
               </div>
               <div className="mb-4">
                 <Label htmlFor="pay_method">Pay Method</Label>
-                <Input
+                <select
                   id="pay_method"
                   name="pay_method"
-                  type="text"
                   value={formData.pay_method}
                   onChange={handleChange}
                   required
-                />
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="sp-qrph">SP-QRPH</option>
+                </select>
               </div>
               <Button type="button" onClick={() => handleSubmit("/payout")}>
                 Submit
@@ -180,6 +188,12 @@ const Index = () => {
           ))}
         </ul>
       </div>
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)}>
+          <iframe src={paymentUrl} title="Payment" className="w-full h-64"></iframe>
+          <Button onClick={() => window.location.href = paymentUrl}>Pay</Button>
+        </Modal>
+      )}
     </div>
   );
 };

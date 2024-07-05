@@ -33,6 +33,9 @@ const Registration = () => {
       const qrData = JSON.stringify(formData);
       setQrCode(qrData);
 
+      // Save QR code key value as bearer token in local storage
+      localStorage.setItem("bearerToken", qrData);
+
       toast.success("Registration successful!");
     } catch (error) {
       toast.error("Registration failed!");
