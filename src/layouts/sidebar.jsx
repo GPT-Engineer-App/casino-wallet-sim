@@ -86,6 +86,10 @@ const Sidebar = () => (
               {item.title}
             </SidebarNavLink>
           ))}
+          <SidebarNavLink to="/wallet">
+            <DollarSign className="h-4 w-4" />
+            Wallet
+          </SidebarNavLink>
           <SidebarNavLink to="/topup">
             <CreditCard className="h-4 w-4" />
             TopUp
@@ -146,6 +150,10 @@ const MobileSidebar = () => (
             {item.title}
           </SidebarNavLink>
         ))}
+        <SidebarNavLink to="/wallet">
+          <DollarSign className="h-4 w-4" />
+          Wallet
+        </SidebarNavLink>
         <SidebarNavLink to="/topup">
           <CreditCard className="h-4 w-4" />
           TopUp

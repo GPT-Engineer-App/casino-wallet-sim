@@ -5,7 +5,7 @@ import { Home } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Profile from "./pages/Profile.jsx";
 import Layout from "./layouts/sidebar"; // Change layout to sidebar
-import Index from "./pages/Index.jsx";
+import Wallet from "./pages/Wallet.jsx";
 import Registration from "./pages/Registration.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import TopUp from "./pages/TopUp.jsx"; // Import TopUp page
@@ -38,7 +38,7 @@ const App = () => {
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<LandingPage />} /> {/* Set LandingPage as the default route */}
+            <Route path="/" element={<Wallet />} /> {/* Set Wallet as the default route */}
             <Route path="profile" element={<Profile />} />
             <Route path="register" element={<Registration />} />
             <Route path="signin" element={<SignIn />} />
@@ -49,8 +49,8 @@ const App = () => {
             <Route path="blank-page-1" element={<BlankPage1 />} />
             <Route path="blank-page-2" element={<BlankPage2 />} />
             <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
-            <Route path="index" element={<Layout />}>
-              <Route index element={<Index />} />
+            <Route path="wallet" element={<Layout />}>
+              <Route index element={<Wallet />} />
             </Route>
           </Routes>
         </Router>

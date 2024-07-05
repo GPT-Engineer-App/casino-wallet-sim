@@ -54,9 +54,9 @@ const DesktopNav = () => (
         {item.title}
       </NavItem>
     ))}
-    <NavItem to="/landing">
+    <NavItem to="/wallet">
       <Home className="h-4 w-4" />
-      Landing
+      Wallet
     </NavItem>
   </nav>
 );
@@ -95,9 +95,9 @@ const MobileNav = () => (
             {item.title}
           </NavItem>
         ))}
-        <NavItem to="/landing">
+        <NavItem to="/wallet">
           <Home className="h-4 w-4" />
-          Landing
+          Wallet
         </NavItem>
       </nav>
     </SheetContent>
