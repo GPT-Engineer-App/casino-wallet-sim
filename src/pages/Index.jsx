@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -179,6 +180,9 @@ const Index = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div className="mt-4 text-center">
+        <p>Don't have an account yet? <Link to="/register" className="text-blue-500">Sign up here</Link></p>
       </div>
     </div>
   );
