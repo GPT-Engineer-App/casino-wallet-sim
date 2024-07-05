@@ -104,7 +104,7 @@ const TopUp = () => {
               <DialogTitle>Payment</DialogTitle>
             </DialogHeader>
             <div className="text-center">
-              <p>Click the "Pay" button to proceed with the payment.</p>
+              <p>Click the "Pay" button to proceed with the payment of ₱{formData.amount}.</p>
               <Button as="a" href={paymentUrl} target="_blank" className="mt-4">
                 Pay
               </Button>
