@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Home } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Profile from "./pages/Profile.jsx";
+import Login from "./pages/Login.jsx";
 import Layout from "./layouts/sidebar"; // Change layout to sidebar
 import Index from "./pages/Index.jsx";
 import Registration from "./pages/Registration.jsx";
@@ -24,7 +25,8 @@ const App = () => {
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Layout />}>
               <Route index element={<Index />} />
               <Route path="profile" element={<Profile />} />
               <Route path="register" element={<Registration />} />
