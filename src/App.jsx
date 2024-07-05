@@ -10,12 +10,8 @@ import Registration from "./pages/Registration.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import TopUp from "./pages/TopUp.jsx"; // Import TopUp page
 import QrCodeStorage from "./pages/QrCodeStorage.jsx"; // Import QrCodeStorage page
-import BankAccountManagement from "./pages/BankAccountManagement.jsx"; // Import BankAccountManagement page
-import Help from "./pages/Help.jsx"; // Import Help page
-import BlankPage1 from "./pages/BlankPage1.jsx";
-import BlankPage2 from "./pages/BlankPage2.jsx";
-import LandingPage from "./pages/LandingPage.jsx"; // Import LandingPage
 import CashOut from "./pages/CashOut.jsx"; // Import CashOut page
+import LandingPage from "./pages/LandingPage.jsx"; // Import LandingPage
 
 const queryClient = new QueryClient();
 
@@ -40,18 +36,13 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="register" element={<Registration />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="topup" element={<TopUp />} />
-              <Route path="qr-code-storage" element={<QrCodeStorage />} />
-              <Route path="bank-account-management" element={<BankAccountManagement />} />
-              <Route path="help" element={<Help />} />
-              <Route path="blank-page-1" element={<BlankPage1 />} />
-              <Route path="blank-page-2" element={<BlankPage2 />} />
-              <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
-              <Route path="cashout" element={<CashOut />} /> {/* Add CashOut route */}
+              <Route index element={<LandingPage />} /> {/* Landing page */}
+              <Route path="signin" element={<SignIn />} /> {/* Sign-in page */}
+              <Route path="register" element={<Registration />} /> {/* Registration page */}
+              <Route path="qr-code-storage" element={<QrCodeStorage />} /> {/* QR code storage page */}
+              <Route path="index" element={<Index />} /> {/* Index page */}
+              <Route path="topup" element={<TopUp />} /> {/* Top Up page */}
+              <Route path="cashout" element={<CashOut />} /> {/* Cash Out page */}
             </Route>
           </Routes>
         </Router>

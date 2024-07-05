@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 const SignIn = () => {
   const [qrCode, setQrCode] = useState(null);
+  const navigate = useNavigate();
 
   const handleQrCodeUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       setQrCode(reader.result);
+      navigate("/");
     };
     reader.readAsDataURL(file);
   };
