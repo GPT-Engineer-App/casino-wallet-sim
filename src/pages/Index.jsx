@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Modal from "@/components/ui/modal";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 const BalanceCard = ({ balance }) => (
   <div className="mb-4">
@@ -95,20 +97,65 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
   </div>
 );
 
-const TransactionHistory = ({ transactions }) => (
-  <div className="mt-4">
-    <h2 className="text-xl font-semibold mb-2">Transaction History</h2>
-    <ul className="bg-gray-100 p-2 rounded">
-      {transactions.map((transaction, index) => (
-        <li key={index} className="mb-2">
-          <div>{transaction.timestamp}</div>
-          <div>{transaction.endpoint === "/payin" ? "Deposit" : "Withdraw"}: ₱{transaction.amount}</div>
-          <div>Remarks: {transaction.remarks}</div>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selectedDate, setSelectedDate }) => {
+  const filteredTransactions = transactions.filter((transaction) => {
+    const matchesSearchQuery = transaction.remarks.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesDate = selectedDate ? format(new Date(transaction.timestamp), "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd") : true;
+    return matchesSearchQuery && matchesDate;
+  });
+
+  const depositTransactions = filteredTransactions.filter(transaction => transaction.endpoint === "/payin");
+  const withdrawTransactions = filteredTransactions.filter(transaction => transaction.endpoint === "/payout");
+
+  return (
+    <div className="mt-4 max-h-96 overflow-y-auto">
+      <h2 className="text-xl font-semibold mb-2">Transaction History</h2>
+      <div className="mb-4">
+        <Label htmlFor="search">Search</Label>
+        <Input
+          id="search"
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by remarks"
+        />
+      </div>
+      <div className="mb-4">
+        <Label htmlFor="date">Filter by Date</Label>
+        <Calendar
+          mode="single"
+          selected={selectedDate}
+          onSelect={setSelectedDate}
+          className="rounded-md border"
+        />
+      </div>
+      <div className="bg-gray-100 p-2 rounded">
+        <h3 className="text-lg font-semibold mb-2">Deposits</h3>
+        <ul>
+          {depositTransactions.map((transaction, index) => (
+            <li key={index} className="mb-2">
+              <div>{transaction.timestamp}</div>
+              <div>Deposit: ₱{transaction.amount}</div>
+              <div>Remarks: {transaction.remarks}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="bg-gray-100 p-2 rounded mt-4">
+        <h3 className="text-lg font-semibold mb-2">Withdrawals</h3>
+        <ul>
+          {withdrawTransactions.map((transaction, index) => (
+            <li key={index} className="mb-2">
+              <div>{transaction.timestamp}</div>
+              <div>Withdraw: ₱{transaction.amount}</div>
+              <div>Remarks: {transaction.remarks}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -122,6 +169,8 @@ const Index = () => {
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     const storedBalance = localStorage.getItem("balance");
@@ -204,7 +253,7 @@ const Index = () => {
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
       )}
       <div className="p-4 mb-4 bg-white rounded shadow">
-        <TransactionHistory transactions={transactions} />
+        <TransactionHistory transactions={transactions} searchQuery={searchQuery} setSearchQuery={setSearchQuery} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
