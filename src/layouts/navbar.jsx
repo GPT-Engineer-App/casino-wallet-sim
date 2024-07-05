@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, Package2, UserPlus } from "lucide-react";
+import { CircleUser, Menu, Package2, UserPlus, HelpCircle } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
 
@@ -45,6 +45,10 @@ const DesktopNav = () => (
       <UserPlus className="h-4 w-4" />
       Sign In
     </NavItem>
+    <NavItem to="/help">
+      <HelpCircle className="h-4 w-4" />
+      Help
+    </NavItem>
     {navItems.map((item) => (
       <NavItem key={item.to} to={item.to}>
         {item.title}
@@ -77,6 +81,10 @@ const MobileNav = () => (
         <NavItem to="/signin">
           <UserPlus className="h-4 w-4" />
           Sign In
+        </NavItem>
+        <NavItem to="/help">
+          <HelpCircle className="h-4 w-4" />
+          Help
         </NavItem>
         {navItems.map((item) => (
           <NavItem key={item.to} to={item.to}>

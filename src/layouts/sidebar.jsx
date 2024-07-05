@@ -102,6 +102,10 @@ const Sidebar = () => (
             <Banknote className="h-4 w-4" />
             Bank Account Management
           </SidebarNavLink>
+          <SidebarNavLink to="/help">
+            <HelpCircle className="h-4 w-4" />
+            Help
+          </SidebarNavLink>
         </nav>
       </div>
     </div>
