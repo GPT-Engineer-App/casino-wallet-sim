@@ -1,3 +1,4 @@
+import SignIn from "./pages/SignIn.jsx";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -7,7 +8,6 @@ import Profile from "./pages/Profile.jsx";
 import Layout from "./layouts/sidebar"; // Change layout to sidebar
 import Index from "./pages/Index.jsx";
 import Registration from "./pages/Registration.jsx";
-import SignIn from "./pages/SignIn.jsx";
 const queryClient = new QueryClient();
 
 export const navItems = [
