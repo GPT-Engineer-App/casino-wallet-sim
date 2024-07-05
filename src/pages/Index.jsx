@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Modal } from "@/components/ui/modal";
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -90,80 +90,64 @@ const Index = () => {
         <h2 className="text-xl font-semibold">Current Balance: ${balance.toFixed(2)}</h2>
       </div>
       <div className="flex space-x-2">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Deposit</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Deposit</DialogTitle>
-            </DialogHeader>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="amount">Amount</Label>
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  value={formData.amount}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <Label htmlFor="pay_method">Pay Method</Label>
-                <Input
-                  id="pay_method"
-                  name="pay_method"
-                  type="text"
-                  value={formData.pay_method}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <Button type="button" onClick={() => handleSubmit("/payin")}>
-                Submit
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Withdraw</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Withdraw</DialogTitle>
-            </DialogHeader>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="amount">Amount</Label>
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  value={formData.amount}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <Label htmlFor="pay_method">Pay Method</Label>
-                <Input
-                  id="pay_method"
-                  name="pay_method"
-                  type="text"
-                  value={formData.pay_method}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <Button type="button" onClick={() => handleSubmit("/payout")}>
-                Submit
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
+        <Modal title="Deposit" triggerText="Deposit">
+          <form>
+            <div className="mb-4">
+              <Label htmlFor="amount">Amount</Label>
+              <Input
+                id="amount"
+                name="amount"
+                type="number"
+                value={formData.amount}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="pay_method">Pay Method</Label>
+              <Input
+                id="pay_method"
+                name="pay_method"
+                type="text"
+                value={formData.pay_method}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <Button type="button" onClick={() => handleSubmit("/payin")}>
+              Submit
+            </Button>
+          </form>
+        </Modal>
+        <Modal title="Withdraw" triggerText="Withdraw">
+          <form>
+            <div className="mb-4">
+              <Label htmlFor="amount">Amount</Label>
+              <Input
+                id="amount"
+                name="amount"
+                type="number"
+                value={formData.amount}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="pay_method">Pay Method</Label>
+              <Input
+                id="pay_method"
+                name="pay_method"
+                type="text"
+                value={formData.pay_method}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <Button type="button" onClick={() => handleSubmit("/payout")}>
+              Submit
+            </Button>
+          </form>
+        </Modal>
       </div>
       {result && (
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
