@@ -194,12 +194,18 @@ const Index = () => {
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">My Lazy Wallet</h1>
-      <BalanceCard balance={balance} />
-      <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <div className="p-4 mb-4 bg-white rounded shadow">
+        <BalanceCard balance={balance} />
+      </div>
+      <div className="p-4 mb-4 bg-white rounded shadow">
+        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      </div>
       {result && (
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
       )}
-      <TransactionHistory transactions={transactions} />
+      <div className="p-4 mb-4 bg-white rounded shadow">
+        <TransactionHistory transactions={transactions} />
+      </div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <iframe src={paymentUrl} title="Payment" className="w-full h-64"></iframe>
