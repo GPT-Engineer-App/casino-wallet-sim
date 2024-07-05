@@ -4,15 +4,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import QRCode from "qrcode.react";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
-    name: "gerald",
-    email: "marcSmith@yahoo.com",
-    mobilenumber: "0909333322",
-    address: "Manila ph",
+    name: "",
+    email: "",
+    mobilenumber: "",
+    address: "",
   });
 
+  const [qrCode, setQrCode] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,34 +26,32 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://api.nexuspay.cloud/payin/process', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
-        },
-        body: JSON.stringify({
-          ...formData,
-          pay_method: "sp-qrph",
-          webhook: "https://api.nexuspay.cloud/payin/payinwebhook.php",
-          currency: "PHP",
-          reference: "1234567890",
-          transaction_id: "txn_1234567890"
-        }),
-      });
+      // Save data in browser cache
+      localStorage.setItem("registrationData", JSON.stringify(formData));
 
-      const result = await response.json();
-      if (result.redirect_url) {
-        window.location.href = result.redirect_url;
-        return;
-      }
+      // Generate QR code
+      const qrData = JSON.stringify(formData);
+      setQrCode(qrData);
 
       toast.success("Registration successful!");
-      navigate("/");
     } catch (error) {
       toast.error("Registration failed!");
       console.error("Error:", error);
     }
+  };
+
+  const handleDownloadQrCode = () => {
+    const canvas = document.getElementById("qrCodeCanvas");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    const downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "qr_code.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    navigate("/");
   };
 
   return (
@@ -77,6 +78,20 @@ const Registration = () => {
         ))}
         <Button type="submit">Register</Button>
       </form>
+      {qrCode && (
+        <Dialog open={true}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>QR Code</DialogTitle>
+            </DialogHeader>
+            <div className="text-center">
+              <p>Save this QR code and keep it safe. It is your key to log in.</p>
+              <QRCode id="qrCodeCanvas" value={qrCode} size={256} />
+              <Button onClick={handleDownloadQrCode} className="mt-4">Download QR Code</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
