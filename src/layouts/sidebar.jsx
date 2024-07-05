@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, DollarSign, Home, Users, Play, HelpCircle, UserPlus, CreditCard, Bank } from "lucide-react";
+import { CircleUser, Menu, DollarSign, Home, Users, Play, HelpCircle, UserPlus, CreditCard, Banknote } from "lucide-react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { navItems } from "../App";
 import { useState, useEffect } from "react";
@@ -99,7 +99,7 @@ const Sidebar = () => (
             QR Code Storage
           </SidebarNavLink>
           <SidebarNavLink to="/bank-account-management">
-            <Bank className="h-4 w-4" />
+            <Banknote className="h-4 w-4" />
             Bank Account Management
           </SidebarNavLink>
         </nav>
