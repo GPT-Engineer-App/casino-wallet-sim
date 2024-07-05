@@ -63,7 +63,7 @@ const Layout = () => {
         <main className="flex-grow p-4 overflow-auto bg-gray-100">
           <Outlet />
         </main>
-        <Footer />
+        <Footer /> {/* Add Footer component */}
       </div>
     </div>
   );
@@ -113,10 +113,6 @@ const Sidebar = () => (
           <SidebarNavLink to="/blank-page-2">
             <CreditCard className="h-4 w-4" />
             Blank Page 2
-          </SidebarNavLink>
-          <SidebarNavLink to="/landing">
-            <Home className="h-4 w-4" />
-            Landing
           </SidebarNavLink>
         </nav>
       </div>
@@ -216,19 +212,23 @@ const Footer = () => (
       <Home className="h-6 w-6" />
       <span className="text-xs">Home</span>
     </NavLink>
-    <NavLink to="/blank-page-1" className="flex flex-col items-center text-muted-foreground hover:text-primary">
-      <Users className="h-6 w-6" />
-      <span className="text-xs">Transfer Fund to Friends</span>
-    </NavLink>
-    <NavLink to="/blank-page-2" className="flex flex-col items-center text-muted-foreground hover:text-primary">
-      <Play className="h-6 w-6" />
-      <span className="text-xs">Play</span>
-    </NavLink>
-    <NavLink to="/help" className="flex flex-col items-center text-muted-foreground hover:text-primary">
-      <HelpCircle className="h-6 w-6" />
-      <span className="text-xs">Help</span>
-    </NavLink>
+    <FooterIcon to="/transfer" icon={<Users className="h-6 w-6" />} label="Transfer Fund to Friends" />
+    <FooterIcon to="https://747-5.com" icon={<Play className="h-6 w-6" />} label="Play" external />
+    <FooterIcon to="/help" icon={<HelpCircle className="h-6 w-6" />} label="Help" />
+    <FooterIcon to="/blank-page-1" icon={<CreditCard className="h-6 w-6" />} label="Blank Page 1" />
+    <FooterIcon to="/blank-page-2" icon={<CreditCard className="h-6 w-6" />} label="Blank Page 2" />
   </footer>
 );
+
+const FooterIcon = ({ to, icon, label, external }) => {
+  const linkProps = external ? { href: to, target: "_blank", rel: "noopener noreferrer" } : { to };
+
+  return (
+    <NavLink {...linkProps} className="flex flex-col items-center text-muted-foreground hover:text-primary">
+      {icon}
+      <span className="text-xs">{label}</span>
+    </NavLink>
+  );
+};
 
 export default Layout;
