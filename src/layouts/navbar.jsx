@@ -38,10 +38,14 @@ const DesktopNav = () => (
       <span className="sr-only">Acme Inc</span>
     </NavItem>
     <NavItem to="/register">
-          <UserPlus className="h-4 w-4" />
-          Register
-        </NavItem>
-        {navItems.map((item) => (
+      <UserPlus className="h-4 w-4" />
+      Register
+    </NavItem>
+    <NavItem to="/signin">
+      <UserPlus className="h-4 w-4" />
+      Sign In
+    </NavItem>
+    {navItems.map((item) => (
       <NavItem key={item.to} to={item.to}>
         {item.title}
       </NavItem>
@@ -69,6 +73,10 @@ const MobileNav = () => (
         <NavItem to="/register">
           <UserPlus className="h-4 w-4" />
           Register
+        </NavItem>
+        <NavItem to="/signin">
+          <UserPlus className="h-4 w-4" />
+          Sign In
         </NavItem>
         {navItems.map((item) => (
           <NavItem key={item.to} to={item.to}>
