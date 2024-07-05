@@ -9,6 +9,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Import Select components
 
 const BalanceCard = ({ balance }) => (
   <div className="mb-4">
@@ -16,7 +17,7 @@ const BalanceCard = ({ balance }) => (
   </div>
 );
 
-const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
+const TransactionButtons = ({ formData, handleChange, handleSubmit, bankAccounts }) => (
   <div className="flex space-x-2">
     <Dialog>
       <DialogTrigger asChild>
@@ -78,17 +79,24 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
             />
           </div>
           <div className="mb-4">
-            <Label htmlFor="pay_method">Pay Method</Label>
-            <select
-              id="pay_method"
-              name="pay_method"
-              value={formData.pay_method}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded"
+            <Label htmlFor="bank_account">Bank Account</Label>
+            <Select
+              id="bank_account"
+              name="bank_account"
+              value={formData.bank_account}
+              onValueChange={(value) => handleChange({ target: { name: "bank_account", value } })}
             >
-              <option value="sp-qrph">SP-QRPH</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a bank account" />
+              </SelectTrigger>
+              <SelectContent>
+                {bankAccounts.map((account, index) => (
+                  <SelectItem key={index} value={account.accountNumber}>
+                    {account.bankName} - {account.accountNumber}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <Button type="button" onClick={() => handleSubmit("/payout")}>
             Submit
@@ -240,6 +248,7 @@ const Index = () => {
     amount: "100",
     pay_method: "sp-qrph",
     remarks: "remarks payin",
+    bank_account: "",
   });
 
   const [result, setResult] = useState(null);
@@ -249,13 +258,16 @@ const Index = () => {
   const [paymentUrl, setPaymentUrl] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDateRange, setSelectedDateRange] = useState(null);
+  const [bankAccounts, setBankAccounts] = useState([]);
 
   useEffect(() => {
     const storedBalance = localStorage.getItem("balance");
     const storedTransactions = localStorage.getItem("transactions");
+    const storedBankAccounts = localStorage.getItem("bankAccounts");
 
     if (storedBalance) setBalance(parseFloat(storedBalance));
     if (storedTransactions) setTransactions(JSON.parse(storedTransactions));
+    if (storedBankAccounts) setBankAccounts(JSON.parse(storedBankAccounts));
   }, []);
 
   useEffect(() => {
@@ -325,7 +337,7 @@ const Index = () => {
         <BalanceCard balance={balance} />
       </div>
       <div className="p-4 mb-4 bg-white rounded shadow">
-        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} bankAccounts={bankAccounts} />
       </div>
       {result && (
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
