@@ -106,6 +106,14 @@ const Sidebar = () => (
             <HelpCircle className="h-4 w-4" />
             Help
           </SidebarNavLink>
+          <SidebarNavLink to="/blank-page-1">
+            <CreditCard className="h-4 w-4" />
+            Blank Page 1
+          </SidebarNavLink>
+          <SidebarNavLink to="/blank-page-2">
+            <CreditCard className="h-4 w-4" />
+            Blank Page 2
+          </SidebarNavLink>
         </nav>
       </div>
     </div>
@@ -207,6 +215,8 @@ const Footer = () => (
     <FooterIcon to="/transfer" icon={<Users className="h-6 w-6" />} label="Transfer Fund to Friends" />
     <FooterIcon to="https://747-5.com" icon={<Play className="h-6 w-6" />} label="Play" external />
     <FooterIcon to="/help" icon={<HelpCircle className="h-6 w-6" />} label="Help" />
+    <FooterIcon to="/blank-page-1" icon={<CreditCard className="h-6 w-6" />} label="Blank Page 1" />
+    <FooterIcon to="/blank-page-2" icon={<CreditCard className="h-6 w-6" />} label="Blank Page 2" />
   </footer>
 );
 
