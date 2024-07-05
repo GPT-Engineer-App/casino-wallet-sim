@@ -3,12 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import QRCode from "qrcode.react";
 
 const SignIn = () => {
   const [qrCode, setQrCode] = useState(null);
-
-  const [generatedQrCode, setGeneratedQrCode] = useState(null);
   const navigate = useNavigate();
 
   const handleQrCodeUpload = (e) => {
@@ -16,26 +13,9 @@ const SignIn = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setQrCode(reader.result);
+      navigate("/");
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleSignIn = () => {
-    const storedBearerToken = localStorage.getItem("bearerToken");
-    if (storedBearerToken) {
-      const generatedQrCodeData = QRCode.toDataURL(storedBearerToken);
-      setGeneratedQrCode(generatedQrCodeData);
-
-      if (qrCode === generatedQrCodeData) {
-        localStorage.setItem("isAuthenticated", "true");
-        toast.success("Sign in successful!");
-        navigate("/index");
-      } else {
-        toast.error("Invalid QR code. Please try again.");
-      }
-    } else {
-      toast.error("No QR code found. Please register first.");
-    }
   };
 
   return (
@@ -53,7 +33,7 @@ const SignIn = () => {
       <div className="mb-4">
         <Input type="file" accept="image/*" onChange={handleQrCodeUpload} />
       </div>
-      <Button type="button" onClick={handleSignIn}>
+      <Button type="button" onClick={() => toast.success("QR Code submitted!")}>
         Submit
       </Button>
       <div className="mt-4 text-center">

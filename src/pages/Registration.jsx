@@ -36,7 +36,7 @@ const Registration = () => {
       // Save QR code key value as bearer token in local storage
       localStorage.setItem("bearerToken", qrData);
 
-      toast.success("Registration successful!");
+      toast.success("Registration successful! Please save your QR code.");
     } catch (error) {
       toast.error("Registration failed!");
       console.error("Error:", error);
@@ -54,7 +54,7 @@ const Registration = () => {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
-    navigate("/");
+    navigate("/sign-in");
   };
 
   return (
@@ -82,7 +82,7 @@ const Registration = () => {
         <Button type="submit">Register</Button>
       </form>
       {qrCode && (
-        <Dialog open={true}>
+        <Dialog open={true} onOpenChange={(isOpen) => !isOpen && navigate("/sign-in")}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>QR Code</DialogTitle>
