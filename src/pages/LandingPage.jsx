@@ -8,7 +8,7 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/hero-background.jpg')" }}>
+      <section className="relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/new-casino-hero.jpg')" }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 text-center text-white">
           <h1 className="text-5xl font-bold mb-4">Welcome to LazyCat Online Casino</h1>
@@ -47,51 +47,6 @@ const LandingPage = () => {
               </CardHeader>
               <CardContent>
                 <p>Keep track of your deposits, withdrawals, and balance all in one place.</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8">What Our Users Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <Avatar className="mx-auto">
-                  <AvatarImage src="/images/user1.jpg" alt="User 1" />
-                  <AvatarFallback>U1</AvatarFallback>
-                </Avatar>
-                <CardTitle className="mt-4">John Doe</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>"LazyCat Online Casino has made managing my funds so much easier. Highly recommended!"</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <Avatar className="mx-auto">
-                  <AvatarImage src="/images/user2.jpg" alt="User 2" />
-                  <AvatarFallback>U2</AvatarFallback>
-                </Avatar>
-                <CardTitle className="mt-4">Jane Smith</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>"The deposit and withdrawal process is seamless and secure. I love it!"</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <Avatar className="mx-auto">
-                  <AvatarImage src="/images/user3.jpg" alt="User 3" />
-                  <AvatarFallback>U3</AvatarFallback>
-                </Avatar>
-                <CardTitle className="mt-4">Alice Johnson</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>"Managing my casino funds has never been this easy. Thank you, LazyCat!"</p>
               </CardContent>
             </Card>
           </div>
