@@ -122,6 +122,10 @@ const Sidebar = () => (
             <CreditCard className="h-4 w-4" />
             Cash Out
           </SidebarNavLink>
+          <SidebarNavLink to="/wallet">
+            <CreditCard className="h-4 w-4" />
+            Wallet
+          </SidebarNavLink>
         </nav>
       </div>
     </div>
@@ -165,6 +169,10 @@ const MobileSidebar = () => (
         <SidebarNavLink to="/cashout">
           <CreditCard className="h-4 w-4" />
           Cash Out
+        </SidebarNavLink>
+        <SidebarNavLink to="/wallet">
+          <CreditCard className="h-4 w-4" />
+          Wallet
         </SidebarNavLink>
       </nav>
     </SheetContent>
