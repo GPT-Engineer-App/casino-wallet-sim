@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -33,6 +34,9 @@ const SignIn = () => {
       <Button type="button" onClick={() => toast.success("QR Code submitted!")}>
         Submit
       </Button>
+      <div className="mt-4 text-center">
+        <p>Don't have an account? <Link to="/register" className="text-blue-500">Register here</Link></p>
+      </div>
     </div>
   );
 };

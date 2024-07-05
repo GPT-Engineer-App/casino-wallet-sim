@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,10 +6,10 @@ import { toast } from "sonner";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
-    name: "gerald",
-    email: "marcSmith@yahoo.com",
-    mobilenumber: "0909333322",
-    address: "Manila ph",
+    name: "",
+    email: "",
+    mobilenumber: "",
+    address: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,17 +17,12 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("https://api.nexuspay.cloud/user/profile", {
-          headers: {
-            "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
-          }
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch profile data");
+        const storedProfileData = localStorage.getItem("registrationData");
+        if (storedProfileData) {
+          setProfileData(JSON.parse(storedProfileData));
+        } else {
+          throw new Error("No profile data found");
         }
-        const data = await response.json();
-        setProfileData(data);
-        localStorage.setItem("profileData", JSON.stringify(data));
       } catch (error) {
         setError(error.message);
       } finally {
@@ -36,13 +30,7 @@ const Profile = () => {
       }
     };
 
-    const storedProfileData = localStorage.getItem("profileData");
-    if (storedProfileData) {
-      setProfileData(JSON.parse(storedProfileData));
-      setLoading(false);
-    } else {
-      fetchProfileData();
-    }
+    fetchProfileData();
   }, []);
 
   const handleChange = (e) => {
