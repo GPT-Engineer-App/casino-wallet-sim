@@ -17,7 +17,7 @@ const BalanceCard = ({ balance }) => (
   </div>
 );
 
-const TransactionButtons = ({ formData, handleChange, handleSubmit, bankAccounts }) => (
+const TransactionButtons = ({ formData, handleChange, handleSubmit, handlePayout, bankAccounts }) => (
   <div className="flex space-x-2">
     <Dialog>
       <DialogTrigger asChild>
@@ -98,7 +98,7 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit, bankAccounts
               </SelectContent>
             </Select>
           </div>
-          <Button type="button" onClick={() => handleSubmit("/payout")}>
+          <Button type="button" onClick={() => handlePayout()}>
             Submit
           </Button>
         </form>
@@ -330,6 +330,52 @@ const Index = () => {
     }
   };
 
+  const handlePayout = async () => {
+    try {
+      const response = await fetch('https://api.nexuspay.cloud/payout/process', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer W6Bqqa2nhGmcWKFg5trryaaQjtOspejlo33Oep4="
+        },
+        body: JSON.stringify({
+          name: "gerald",
+          email: "marcSmith@yahoo.com",
+          amount: formData.amount,
+          bank_account: formData.bank_account,
+          mobilenumber: "0909333322",
+          address: "Manila ph",
+          webhook: "https://api.nexuspay.cloud/payout/payoutwebhook.php",
+          remarks: formData.remarks,
+          currency: "PHP",
+          reference: "1234567890",
+          transaction_id: "txn_1234567890"
+        }),
+      });
+
+      const result = await response.json();
+      setResult(result);
+
+      if (result.redirect_url) {
+        setPaymentUrl(result.redirect_url);
+        setShowModal(true);
+        return;
+      }
+
+      setBalance((prevBalance) => prevBalance - parseFloat(formData.amount));
+
+      setTransactions((prevTransactions) => [
+        ...prevTransactions,
+        { ...formData, endpoint: "/payout", timestamp: new Date().toISOString() },
+      ]);
+
+      toast.success("Payout successful!");
+    } catch (error) {
+      toast.error("Payout failed!");
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">My Lazy Wallet</h1>
@@ -337,7 +383,7 @@ const Index = () => {
         <BalanceCard balance={balance} />
       </div>
       <div className="p-4 mb-4 bg-white rounded shadow">
-        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} bankAccounts={bankAccounts} />
+        <TransactionButtons formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} handlePayout={handlePayout} bankAccounts={bankAccounts} />
       </div>
       {result && (
         <pre className="mt-4 p-2 bg-gray-100 rounded">{JSON.stringify(result, null, 2)}</pre>
