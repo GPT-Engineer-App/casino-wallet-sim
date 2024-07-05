@@ -8,6 +8,7 @@ import Modal from "@/components/ui/modal";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const BalanceCard = ({ balance }) => (
   <div className="mb-4">
@@ -100,12 +101,24 @@ const TransactionButtons = ({ formData, handleChange, handleSubmit }) => (
 
 const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selectedDate, setSelectedDate }) => {
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const transactionsPerPage = 5;
 
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearchQuery = transaction.remarks.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDate = selectedDate ? format(new Date(transaction.timestamp), "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd") : true;
     return matchesSearchQuery && matchesDate;
   });
+
+  const indexOfLastTransaction = currentPage * transactionsPerPage;
+  const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
+  const currentTransactions = filteredTransactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+
+  const totalPages = Math.ceil(filteredTransactions.length / transactionsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="mt-4 max-h-96 overflow-y-auto">
@@ -144,9 +157,9 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredTransactions.map((transaction, index) => (
+            {currentTransactions.map((transaction, index) => (
               <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
+                <TableCell>{indexOfFirstTransaction + index + 1}</TableCell>
                 <TableCell>{transaction.timestamp}</TableCell>
                 <TableCell>₱{transaction.amount}</TableCell>
                 <TableCell>{transaction.endpoint === "/payin" ? "Deposit" : "Withdraw"}</TableCell>
@@ -155,6 +168,35 @@ const TransactionHistory = ({ transactions, searchQuery, setSearchQuery, selecte
           </TableBody>
         </Table>
       </div>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+          </PaginationItem>
+          {[...Array(totalPages)].map((_, pageIndex) => (
+            <PaginationItem key={pageIndex}>
+              <PaginationLink
+                href="#"
+                onClick={() => handlePageChange(pageIndex + 1)}
+                active={currentPage === pageIndex + 1}
+              >
+                {pageIndex + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 };
