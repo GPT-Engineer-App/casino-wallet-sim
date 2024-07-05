@@ -12,6 +12,8 @@ import TopUp from "./pages/TopUp.jsx"; // Import TopUp page
 import QrCodeStorage from "./pages/QrCodeStorage.jsx"; // Import QrCodeStorage page
 import BankAccountManagement from "./pages/BankAccountManagement.jsx"; // Import BankAccountManagement page
 import Help from "./pages/Help.jsx"; // Import Help page
+import BlankPage1 from "./pages/BlankPage1.jsx";
+import BlankPage2 from "./pages/BlankPage2.jsx";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,8 @@ const App = () => {
               <Route path="qr-code-storage" element={<QrCodeStorage />} /> {/* Add this line */}
               <Route path="bank-account-management" element={<BankAccountManagement />} /> {/* Add this line */}
               <Route path="help" element={<Help />} /> {/* Add this line */}
+              <Route path="blank-page-1" element={<BlankPage1 />} />
+              <Route path="blank-page-2" element={<BlankPage2 />} />
             </Route>
           </Routes>
         </Router>
