@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, DollarSign, Home, Users, Play, HelpCircle, UserPlus } from "lucide-react";
+import { CircleUser, Menu, DollarSign, Home, Users, Play, HelpCircle, UserPlus, CreditCard } from "lucide-react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { navItems } from "../App";
 import { useState, useEffect } from "react";
@@ -86,6 +86,10 @@ const Sidebar = () => (
               {item.title}
             </SidebarNavLink>
           ))}
+          <SidebarNavLink to="/topup">
+            <CreditCard className="h-4 w-4" />
+            TopUp
+          </SidebarNavLink>
           <SidebarNavLink to="/signin">
             <UserPlus className="h-4 w-4" />
             Sign In
@@ -118,6 +122,10 @@ const MobileSidebar = () => (
             {item.title}
           </SidebarNavLink>
         ))}
+        <SidebarNavLink to="/topup">
+          <CreditCard className="h-4 w-4" />
+          TopUp
+        </SidebarNavLink>
         <SidebarNavLink to="/signin">
           <UserPlus className="h-4 w-4" />
           Sign In
