@@ -37,9 +37,9 @@ const DesktopNav = () => (
       <Package2 className="h-6 w-6" />
       <span className="sr-only">Acme Inc</span>
     </NavItem>
-    <NavItem to="/register">
+    <NavItem to="/signin">
           <UserPlus className="h-4 w-4" />
-          Register
+          Sign In
         </NavItem>
         {navItems.map((item) => (
       <NavItem key={item.to} to={item.to}>
@@ -66,9 +66,9 @@ const MobileNav = () => (
           <Package2 className="h-6 w-6" />
           <span className="sr-only">Acme Inc</span>
         </NavItem>
-        <NavItem to="/register">
+        <NavItem to="/signin">
           <UserPlus className="h-4 w-4" />
-          Register
+          Sign In
         </NavItem>
         {navItems.map((item) => (
           <NavItem key={item.to} to={item.to}>
