@@ -15,6 +15,7 @@ import Help from "./pages/Help.jsx"; // Import Help page
 import BlankPage1 from "./pages/BlankPage1.jsx";
 import BlankPage2 from "./pages/BlankPage2.jsx";
 import LandingPage from "./pages/LandingPage.jsx"; // Import LandingPage
+import CashOut from "./pages/CashOut.jsx"; // Import CashOut page
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => {
               <Route path="blank-page-1" element={<BlankPage1 />} />
               <Route path="blank-page-2" element={<BlankPage2 />} />
               <Route path="landing" element={<LandingPage />} /> {/* Add LandingPage route */}
+              <Route path="cashout" element={<CashOut />} /> {/* Add CashOut route */}
             </Route>
           </Routes>
         </Router>
